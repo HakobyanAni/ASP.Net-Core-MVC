@@ -1,0 +1,24 @@
+﻿@using Representation_Layer_MVC_.Enums;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4" style=border-color>Welcome to Hotel des Arts</h1>
+    </br>
+    </br>
+    </br>
+    </br>
+    <div class="roomButtons">
+
+        <p><h2><b>Rooms</b></h2></p>
+        <p><button class="@RoomType.StandardSingle" id="1"><b>Standard Single</b></button></p>
+        <p><button class="@RoomType.StandardDouble" id="2"><b>Standard Double</b></button></p>
+        <p><button class="@RoomType.StandardTwin" id="3"><b>Standard Twin</b></button></p>
+        <p><button class="@RoomType.Deluxe" id="4"><b>Deluxe</b></button></p>
+        <p><button class="@RoomType.Luxe" id="5"><b>Luxe</b></button></p>
+    </div>
+</div>
+

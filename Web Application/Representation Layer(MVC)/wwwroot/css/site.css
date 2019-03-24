@@ -1,0 +1,22 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+h1 {
+    color: darkolivegreen;
+    text-align: center;
+}
+
+h2 {
+    color: darkslategray;
+    text-align: center;
+}
+
+button {
+    display: flex;
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    background-color: darkolivegreen;
+    align-content: center;
+    align-items: center;
+}
