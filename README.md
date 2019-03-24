@@ -1,7 +1,6 @@
 # ASP.Net-Core - MVC
 
 <h2>What is ASP.NET Core ?</h2>
-
 <h4>ASP.NET Core is the new web framework from Microsoft. It has been redesigned from the ground up to be fast, flexible, modern,
 and work across different platforms.</br>
 </br>
