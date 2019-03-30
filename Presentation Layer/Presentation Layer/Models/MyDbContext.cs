@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Presentation_Layer.Models
 {
-    public class MyDbContext : IdentityDbContext<User>
+    public class MyDbContext : IdentityDbContext<UserModel>
     {
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {

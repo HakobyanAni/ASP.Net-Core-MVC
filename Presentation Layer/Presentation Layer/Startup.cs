@@ -37,7 +37,7 @@ namespace Presentation_Layer
             services.AddDbContext<MyDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<UserModel, IdentityRole>()
                 .AddEntityFrameworkStores<MyDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

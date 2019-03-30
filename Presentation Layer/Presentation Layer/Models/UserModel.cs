@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Presentation_Layer.Models
 {
-    public class User : IdentityUser
+    public class UserModel : IdentityUser
     {
         public int BirthYear { get; set; }
     }
