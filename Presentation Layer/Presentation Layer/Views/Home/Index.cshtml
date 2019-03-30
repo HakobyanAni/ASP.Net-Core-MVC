@@ -6,3 +6,21 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="AuthenticatedUserName">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <p>@User.Identity.Name</p>
+        <form method="post" asp-controller="Account" asp-action="LogOff">
+            <input class="mainbuttons" type="submit" value="Log out" />
+        </form>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="LogIn">Log In</a>
+        <a asp-controller="Account" asp-action="Register">Register</a>
+    }
+</div>
+
+
+

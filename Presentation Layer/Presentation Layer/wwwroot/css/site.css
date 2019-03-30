@@ -18,8 +18,21 @@ html {
   }
 }
 
+.mainbuttons {
+    border-color: darkslategray;
+    background-color: darkslategray;
+    color: white;
+}
+
+.AuthenticatedUserName {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: end;
+}
+
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
