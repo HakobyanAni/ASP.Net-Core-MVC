@@ -1,0 +1,22 @@
+﻿@model Presentation_Layer.ViewModels.EditUserViewModel
+@{
+    ViewBag.Title = "Edit user";
+}
+
+<form asp-action="Edit" asp-controller="User">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="custom-control-label">Email</label>
+        <input type="text" asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Year" class="custom-control-label">Birth Year</label>
+        <input type="number" asp-for="Year" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default" />
+    </div>
+</form>

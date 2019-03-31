@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Presentation_Layer.Models.UserModel>
+@{
+    ViewBag.Title = "List of all users";
+}
+
+<a asp-action="Create">Add user</a>
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>Year</th>
+        <th></th>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.BirthYear</td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.Id">Change</a>
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tr>
+</table>s
