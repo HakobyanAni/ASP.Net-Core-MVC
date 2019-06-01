@@ -8,11 +8,15 @@ using DataAccessLayer.Entities;
 
 namespace DataAccessLayer
 {
-    public class DBContext : IdentityDbContext<IdentityUser, IdentityRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>> 
+    public class DBContext : IdentityDbContext<IdentityUser> 
     {
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
                 
+        }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
 
         public virtual DbSet<UserEntity> UserTable { get; set; }

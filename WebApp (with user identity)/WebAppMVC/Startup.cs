@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using WebAppMVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DataAccessLayer;
+using WebAppMVC.Areas.Admin;
 
 namespace WebAppMVC
 {
@@ -44,7 +46,7 @@ namespace WebAppMVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider, DBContext context)
         {
             if (env.IsDevelopment())
             {
@@ -69,6 +71,8 @@ namespace WebAppMVC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AdminDetails.SeedAsync(provider, context);
         }
     }
 }
