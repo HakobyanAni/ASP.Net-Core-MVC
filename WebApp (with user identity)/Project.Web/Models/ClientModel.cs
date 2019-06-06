@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace Project.Web.Models
 {
-    public class ClientModel
+    public class ClientModel : BaseModel
     {
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }

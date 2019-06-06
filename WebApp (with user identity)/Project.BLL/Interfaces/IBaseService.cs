@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Project.BLL.Interfaces
 {
-    interface IBaseInterface
+    interface IBaseService
     {
     }
 }

@@ -23,13 +23,11 @@ namespace Project.DAL
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
 
-            //builder.Entity<UserEntity>().ToTable("Users")
-            //  .HasOne(u => u.Client)
-            //  .WithMany(c => c.Users)
-            //  .HasForeignKey(x => x.ClientId);
+            builder.Entity<UserEntity>().ToTable("Users")
+              .HasOne(u => u.Client)
+              .WithMany(c => c.Users)
+              .HasForeignKey(x => x.ClientId);
         }
-
         public virtual DbSet<ClientEntity> Clients { get; set; }
-
     }
 }

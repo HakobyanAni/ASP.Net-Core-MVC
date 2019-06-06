@@ -5,14 +5,15 @@ using System.Text;
 
 namespace Project.DAL.Entities
 {
-    public class ClientEntity
+    public class ClientEntity : BaseEntity
     {
-        [Required]
-        public int Id { get; set; }
-
+        public ClientEntity()
+        {
+            this.Users = new List<UserEntity>();
+        }
+        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
-
         public virtual ICollection<UserEntity> Users { get; set; }
     }
 }

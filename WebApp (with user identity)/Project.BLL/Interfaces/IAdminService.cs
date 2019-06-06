@@ -8,8 +8,8 @@ namespace Project.BLL.Interfaces
 {
     interface IAdminService
     {
-        Task<string> CreateClient(ClientModel client);
-        Task<string> EditCLient(int clientId, string clientName);
-        Task<string> DeleteClient(int clientId);
+        Task<string> CreateClient(ClientModel clientModel, UserModel userModel);
+        Task<string> EditClientName(int clientId, string nameToBe, UserModel userModel);
+        Task<string> DeleteClient(int clientId, UserModel userModel);
     }
 }

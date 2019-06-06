@@ -13,6 +13,7 @@ using Project.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Project.DAL;
+using Project.Web.Areas.Helper;
 
 namespace Project.Web
 {
@@ -45,7 +46,7 @@ namespace Project.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider prov, ProjectDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +71,8 @@ namespace Project.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AdminDetails.SeedAsync(prov, dbContext).Wait();
         }
     }
 }
