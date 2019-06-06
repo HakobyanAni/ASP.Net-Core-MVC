@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Project.BLL.Implementation;
+using Project.DAL.Entities;
 
 namespace Project.Web.Areas.Admin
 {
     public class AdminController : Controller
     {
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private AdminService _adminService;
+
+        public AdminController(UserManager<UserEntity> userManager, RoleManager<IdentityRole<int>> roleManager, AdminService adminService)
+        {
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _adminService = adminService;
+        }
         // GET: Admin
         public ActionResult Index()
         {

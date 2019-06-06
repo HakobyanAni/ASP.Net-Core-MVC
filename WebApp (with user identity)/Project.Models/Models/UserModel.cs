@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.Web.Helper;
+using Project.DAL.Enumeration;
 
 namespace Project.Web.Models
 {

@@ -14,6 +14,9 @@ namespace Project.BLL.Implementation
             _projectDbContext = projectDbContext;
         }
 
-
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
