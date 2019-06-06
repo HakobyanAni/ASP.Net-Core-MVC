@@ -6,7 +6,7 @@ using Project.DAL;
 
 namespace Project.BLL.Implementation
 {
-    public class BaseService : IBaseService, IDisposable
+    public class BaseService : IBaseService
     {
         protected ProjectDbContext _projectDbContext;
         public BaseService(ProjectDbContext projectDbContext)
