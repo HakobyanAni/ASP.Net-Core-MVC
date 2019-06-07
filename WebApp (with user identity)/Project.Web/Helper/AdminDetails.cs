@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Project.DAL;
 using Project.DAL.Entities;
-using Project.Web.Helper;
+using Project.Models.Enumerations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Project.Web.Areas.Helper
+namespace Project.Web.Helper
 {
     public static class AdminDetails
     {
-        public static async Task SeedAsync(IServiceProvider service, ProjectDbContext dbContext)
+        public static async Task SeedAsync(IServiceProvider service, ProjectDbContext context)
         {
-            dbContext.Database.Migrate();
+            context.Database.Migrate();
             RoleManager<IdentityRole<int>> roleManager = service.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
             IdentityRole<int> userRole;
@@ -37,7 +37,7 @@ namespace Project.Web.Areas.Helper
             {
                 admin = new UserEntity()
                 {
-                    Name = "PRAdmin",
+                    Name = "Admin",
                     UserName = "admin@pr.com",
                     Email = "admin@pr.com",
                     CreateDate = DateTime.Now,
@@ -46,9 +46,9 @@ namespace Project.Web.Areas.Helper
                     PhoneNumber = "+37477558877",
                 };
 
-                IdentityResult result = await userManager.CreateAsync(admin, "AdminPr123@");
+                IdentityResult result = await userManager.CreateAsync(admin, "Admin@PR875");
                 await userManager.AddToRoleAsync(admin, RoleEnum.Admin.ToString());
-                dbContext.SaveChanges();
+                context.SaveChanges();
             }
         }
     }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Project.BLL.Implementation;
 using Project.DAL.Entities;
+using Project.Web.Models;
 
 namespace Project.Web.Areas.Admin
 {
@@ -28,79 +29,132 @@ namespace Project.Web.Areas.Admin
             return View();
         }
 
-        // GET: Admin/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
+        // Create Client
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> CreateClient(ClientModel clientModel, UserModel userModel)
+        {
+            string resultForCreate = await _adminService.CreateClient(clientModel, userModel);
+
+            return View();
+        }
+
+        // Edit Client name
+        [HttpPost]
+        public async Task<IActionResult> EditClientName(int clientId, string nameToBe, UserModel userModel)
+        {
+            string resultForEdit = await _adminService.EditClientName(clientId, nameToBe, userModel);
+
+            return View();
+        }
+
+
+        // Delete Client
+        [HttpPost]
+        public async Task<IActionResult> DeleteClient(int clientId, UserModel userModel)
+        {
+            string resultForDelete = await _adminService.DeleteClient(clientId, userModel);
+
+            return View();
+        }
+
+        // Create User or ClientAdmin
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(UserModel userModel)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
+                UserEntity userToCreate = await _userManager.FindByEmailAsync(userModel.Email);
+                if (userToCreate == null)
+                {
+                    userToCreate = EntityModelConverter.ConvertToEntity(userModel);
+                    IdentityResult result = await _userManager.CreateAsync(userToCreate, userModel.Password);
+                    if (result.Succeeded)
+                    {
+                        IdentityResult roleResult = await _userManager.AddToRoleAsync(userToCreate, userModel.Role.ToString());
+                        if (!roleResult.Succeeded)
+                        {
+                            return BadRequest(result.Errors.FirstOrDefault().Description);
+                        }
+                        return Ok("User was successfully created.");
+                    }
+                    return BadRequest(result.Errors.FirstOrDefault().Description);
+                }
+                else
+                {
+                    return BadRequest("Current user already exists.");
+                }
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                // Here we can log the exception
+                return BadRequest("Oops! Something went wrong while creating user.");
             }
+
+            // return View(); // 
         }
 
-        // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Admin/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        // Edit User or ClientAdmin
+        public async Task<IActionResult> EditUser(UserModel userModel)
         {
             try
             {
-                // TODO: Add delete logic here
+                int userCurrentId = int.Parse(_userManager.GetUserId(User));
+                UserEntity userToEdit = await _userManager.FindByIdAsync(userModel.ID.ToString());
+                if (userToEdit == null)
+                {
+                    return BadRequest("User doesn't exist.");
+                }
+                userToEdit.Name = userModel.Name;
+                userToEdit.UpdatedDate = DateTime.Now;
+                userToEdit.UpdatedByUserId = userCurrentId;
 
-                return RedirectToAction(nameof(Index));
+                // Role changing
+                if (!(await _userManager.IsInRoleAsync(userToEdit, userModel.Role.ToString())))
+                {
+                    string role = (await _userManager.GetRolesAsync(userToEdit)).FirstOrDefault();
+                    await _userManager.RemoveFromRoleAsync(userToEdit, role);
+                    await _userManager.AddToRoleAsync(userToEdit, userModel.Role.ToString());
+                }
+
+                IdentityResult result = await _userManager.UpdateAsync(userToEdit);
+                return Ok("Current user was successfully updated.");
             }
             catch
             {
-                return View();
+                // Here we can log the exception
+                return BadRequest("Oops! Something went wrong while editing user.");
             }
+            // return View();
+        }
+
+        // Delete User or ClientAdmin
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                UserEntity usertoDelete = await _userManager.FindByIdAsync(id.ToString());
+                if (usertoDelete != null)
+                {
+                    int userCurrentId = int.Parse(_userManager.GetUserId(User));
+                    usertoDelete.Deleted = true;
+                    usertoDelete.UpdatedDate = DateTime.Now;
+                    usertoDelete.UpdatedByUserId = userCurrentId;
+                    IdentityResult result = await _userManager.UpdateAsync(usertoDelete);
+
+                    return Ok("Current user was successfully deleted.");
+                }
+                else
+                {
+                    return BadRequest("User doesn't exist.");
+                }
+            }
+            catch (Exception e)
+            {
+                // Here we can log the exception
+                return BadRequest("Oops! Something went wrong while creating user.");
+            }
+
+            // return View();
         }
     }
 }

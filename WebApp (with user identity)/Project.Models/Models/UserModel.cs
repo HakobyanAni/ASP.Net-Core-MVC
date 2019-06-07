@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Project.Models.Enumerations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Project.DAL.Enumeration;
 
 namespace Project.Web.Models
 {

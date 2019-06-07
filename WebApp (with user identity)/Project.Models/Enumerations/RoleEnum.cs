@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Project.Web.Helper
+namespace Project.Models.Enumerations
 {
     public enum RoleEnum
     {
         Admin = 1,
-        ClientAdmin,
-        User
+        User = 2,
+        ClientAdmin = 3
     }
 }
