@@ -15,7 +15,7 @@ namespace Project.DAL.Entities
         public int? UpdatedByUserId { get; set; }
         public int? CreatedByUserId { get; set; }
         public bool Deleted { get; set; }
-        public int? ClientId { get; set; }
+        public int ClientId { get; set; }
         public ClientEntity Client { get; set; }
     }
 }

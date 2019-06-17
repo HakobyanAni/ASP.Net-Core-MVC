@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,52 @@ namespace Project.BLL.Implementation
     {
         public AdminService(ProjectDbContext context) : base(context) { }
 
-        public async Task<string> CreateClient(ClientModel clientModel, UserModel userModel)
+        public IQueryable<ClientEntity> GetAllClients()
         {
-            ClientEntity client = await _projectDbContext.Clients.FirstOrDefaultAsync(x => x.ID == clientModel.ID && !x.Deleted);
+            var clients = _projectDbContext.Clients;
+            return clients;
+        }
+
+        public async Task<ClientModel> GetClientById(int id)
+        {
+            try
+            {
+                var client = await _projectDbContext.Clients.Where(x => !x.Deleted && x.ID == id).Select(x => new ClientModel
+                {
+                    ID = x.ID,
+                    Name = x.Name,
+                    CreatedByUserId = x.CreatedByUserId,
+                    CreateDate = x.CreateDate,
+                    Users = x.Users.Select(u => new UserModel
+                    {
+                        ClientId = u.ClientId,
+                        Email = u.Email,
+                        Name = u.Name,
+                        UserName = u.UserName
+                    }).ToList()
+                }).FirstOrDefaultAsync();
+
+                return client;
+            }
+            catch (Exception e)
+            {
+                // Here we can log Exception
+                throw;
+            }
+        }
+
+        public async Task<string> CreateClient(ClientModel clientModel, int userId)
+        {
+            ClientEntity client = await _projectDbContext.Clients.FirstOrDefaultAsync(x => x.Name == clientModel.Name && !x.Deleted);
 
             if (client == null)
             {
                 client = new ClientEntity
                 {
                     Name = clientModel.Name,
-                    Deleted = false,
                     CreateDate = DateTime.Now,
                     UpdateDate = DateTime.Now,
-                    CreatedByUserId = userModel.ID
+                    CreatedByUserId = userId
                 };
 
                 try
